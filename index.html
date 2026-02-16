@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jurnal Mengajar Guru - MIS DARUL HIKMAH</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .toast {
+      animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-in 2.7s forwards;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    .form-input:focus {
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    }
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+  <div id="app-wrapper" class="h-full w-full overflow-auto">
+   <div class="min-h-full w-full py-8 px-4">
+    <div class="max-w-2xl mx-auto">
+     <!-- Header -->
+     <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-lg mb-4">
+       <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+       </svg>
+      </div>
+      <h1 id="school-name" class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">MIS DARUL HIKMAH</h1>
+      <h2 id="form-title" class="text-lg md:text-xl font-semibold text-emerald-600">Jurnal Mengajar Guru</h2>
+      <p class="text-gray-500 text-sm mt-2">Silakan isi data pembelajaran harian Anda</p>
+     </div><!-- Toast Notification -->
+     <div id="toast" class="hidden fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+      <div class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 toast">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+       </svg><span class="font-medium">DATA SUDAH TERKIRIM</span>
+      </div>
+     </div><!-- Form Card -->
+     <div class="bg-white rounded-3xl shadow-xl p-6 md:p-8">
+      <form id="journal-form" class="space-y-5">
+       <!-- Row 1: Hari & Tanggal -->
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+         <label for="hari" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">📅</span> Hari </span> </label> <select id="hari" name="hari" required class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50"> <option value="">Pilih Hari</option> <option value="Senin">Senin</option> <option value="Selasa">Selasa</option> <option value="Rabu">Rabu</option> <option value="Kamis">Kamis</option> <option value="Jumat">Jumat</option> <option value="Sabtu">Sabtu</option> </select>
+        </div>
+        <div>
+         <label for="tanggal" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">🗓️</span> Tanggal </span> </label> <input type="date" id="tanggal" name="tanggal" required class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50">
+        </div>
+       </div><!-- Row 2: Kelas -->
+       <div>
+        <label for="kelas" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">🏫</span> Kelas </span> </label> <select id="kelas" name="kelas" required class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50"> <option value="">Pilih Kelas</option> <option value="Kelas 1">Kelas 1</option> <option value="Kelas 2">Kelas 2</option> <option value="Kelas 3">Kelas 3</option> <option value="Kelas 4">Kelas 4</option> <option value="Kelas 5">Kelas 5</option> <option value="Kelas 6">Kelas 6</option> </select>
+       </div><!-- Row 3: Jam Mulai & Jam Selesai -->
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+         <label for="jam_mulai" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">🕐</span> Jam Mulai </span> </label> <input type="time" id="jam_mulai" name="jam_mulai" required class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50">
+        </div>
+        <div>
+         <label for="jam_selesai" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">🕑</span> Jam Selesai </span> </label> <input type="time" id="jam_selesai" name="jam_selesai" required class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50">
+        </div>
+       </div><!-- Row 4: Mata Pelajaran -->
+       <div>
+        <label for="mata_pelajaran" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">📚</span> Mata Pelajaran </span> </label> <input type="text" id="mata_pelajaran" name="mata_pelajaran" required placeholder="Contoh: Matematika, Bahasa Indonesia, dll" class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50">
+       </div><!-- Row 5: Materi Pembelajaran -->
+       <div>
+        <label for="materi_pembelajaran" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">📝</span> Materi Pembelajaran </span> </label> <textarea id="materi_pembelajaran" name="materi_pembelajaran" required rows="3" placeholder="Tuliskan materi yang diajarkan..." class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50 resize-none"></textarea>
+       </div><!-- Row 6: Bab & No Halaman -->
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+         <label for="bab" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">📖</span> Bab </span> </label> <input type="text" id="bab" name="bab" required placeholder="Contoh: Bab 1, Bab 2, dll" class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50">
+        </div>
+        <div>
+         <label for="no_halaman" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">📄</span> No Halaman </span> </label> <input type="text" id="no_halaman" name="no_halaman" required placeholder="Contoh: 10-15" class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50">
+        </div>
+       </div><!-- Row 7: Nama Guru -->
+       <div>
+        <label for="nama_guru" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">👨‍🏫</span> Nama Guru </span> </label> <input type="text" id="nama_guru" name="nama_guru" required placeholder="Masukkan nama lengkap guru" class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50">
+       </div><!-- Row 8: Keterangan Ketuntasan -->
+       <div>
+        <label for="ketuntasan" class="block text-sm font-semibold text-gray-700 mb-2"> <span class="flex items-center gap-2"> <span class="text-lg">✅</span> Keterangan Ketuntasan Materi </span> </label> <select id="ketuntasan" name="ketuntasan" required class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none transition-all bg-gray-50"> <option value="">Pilih Status Ketuntasan</option> <option value="Tuntas">✓ Tuntas</option> <option value="Belum Tuntas">✗ Belum Tuntas</option> </select>
+       </div><!-- Submit Button -->
+       <div class="pt-4">
+        <button type="submit" id="submit-btn" class="submit-btn w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"> <span id="btn-text">KIRIM DATA</span>
+         <svg id="btn-spinner" class="hidden w-5 h-5 spinner" fill="none" viewbox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle> <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+         </svg>
+         <svg id="btn-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+         </svg></button>
+       </div>
+      </form><!-- Data Count -->
+      <div id="data-count" class="mt-6 text-center text-sm text-gray-500">
+       <span id="record-count">0</span> data jurnal tersimpan
+      </div>
+     </div><!-- Footer -->
+     <div class="text-center mt-6 text-sm text-gray-500">
+      <p>© 2024 MIS Darul Hikmah - Sistem Jurnal Mengajar Digital</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      school_name: 'MIS DARUL HIKMAH',
+      form_title: 'Jurnal Mengajar Guru',
+      primary_color: '#22c55e',
+      secondary_color: '#059669',
+      background_color: '#f0fdf4',
+      text_color: '#1f2937',
+      surface_color: '#ffffff'
+    };
+
+    let currentData = [];
+    let isSubmitting = false;
+
+    const dataHandler = {
+      onDataChanged(data) {
+        currentData = data;
+        updateRecordCount(data.length);
+      }
+    };
+
+    function updateRecordCount(count) {
+      const countEl = document.getElementById('record-count');
+      if (countEl) {
+        countEl.textContent = count;
+      }
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    function setLoading(loading) {
+      isSubmitting = loading;
+      const btn = document.getElementById('submit-btn');
+      const btnText = document.getElementById('btn-text');
+      const btnSpinner = document.getElementById('btn-spinner');
+      const btnIcon = document.getElementById('btn-icon');
+
+      btn.disabled = loading;
+      btnText.textContent = loading ? 'MENGIRIM...' : 'KIRIM DATA';
+      btnSpinner.classList.toggle('hidden', !loading);
+      btnIcon.classList.toggle('hidden', loading);
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      
+      if (isSubmitting) return;
+
+      setLoading(true);
+
+      const formData = {
+        hari: document.getElementById('hari').value,
+        tanggal: document.getElementById('tanggal').value,
+        kelas: document.getElementById('kelas').value,
+        jam_mulai: document.getElementById('jam_mulai').value,
+        jam_selesai: document.getElementById('jam_selesai').value,
+        mata_pelajaran: document.getElementById('mata_pelajaran').value,
+        materi_pembelajaran: document.getElementById('materi_pembelajaran').value,
+        bab: document.getElementById('bab').value,
+        no_halaman: document.getElementById('no_halaman').value,
+        nama_guru: document.getElementById('nama_guru').value,
+        ketuntasan: document.getElementById('ketuntasan').value,
+        created_at: new Date().toISOString()
+      };
+
+      try {
+        // Send to Google Apps Script
+        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxqiGlOebjyjCOI0R0XAiGH33HghrBSGTPsrXk0URgLWI1W85Q_HC4HQTohxZLJEJ8oqg/exec';
+        
+        await fetch(googleScriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        // Also save to Canva Data SDK for backup
+        if (window.dataSdk) {
+          await window.dataSdk.create(formData);
+        }
+
+        showToast();
+        document.getElementById('journal-form').reset();
+        document.getElementById('tanggal').valueAsDate = new Date();
+
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function onConfigChange(config) {
+      const schoolName = document.getElementById('school-name');
+      const formTitle = document.getElementById('form-title');
+
+      if (schoolName) {
+        schoolName.textContent = config.school_name || defaultConfig.school_name;
+      }
+      if (formTitle) {
+        formTitle.textContent = config.form_title || defaultConfig.form_title;
+      }
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['school_name', config.school_name || defaultConfig.school_name],
+        ['form_title', config.form_title || defaultConfig.form_title]
+      ]);
+    }
+
+    async function init() {
+      document.getElementById('tanggal').valueAsDate = new Date();
+      document.getElementById('journal-form').addEventListener('submit', handleSubmit);
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+      }
+
+      if (window.dataSdk) {
+        await window.dataSdk.init(dataHandler);
+      }
+    }
+
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cebf8c6a4692df9',t:'MTc3MTIzMzY1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
